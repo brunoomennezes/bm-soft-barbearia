@@ -21,7 +21,7 @@ tailwind.config = {
             }
         }
 
-/* STATE & INITIAL CONFIG */
+/* ESTADO E CONFIGURAÇÃO INICIAL */
         let isStoreOpen = true;
         let isAdminAuthenticated = false;
         let selectedServiceId = 1;
@@ -29,7 +29,7 @@ tailwind.config = {
         let barberShopWhatsApp = "5575999998888"; // Número do WhatsApp da Barbearia
         let activeClientPhone = null;
 
-        // Initial Services List
+        // Lista de Serviços Iniciais
         let services = [
             { id: 1, name: "Apenas Cabelo", price: 35.00, duration: 30, icon: "fa-scissors", isKid: false },
             { id: 2, name: "Cabelo e Barba", price: 60.00, duration: 45, icon: "fa-user-ninja", isKid: false },
@@ -39,7 +39,7 @@ tailwind.config = {
             { id: 6, name: "Corte Cabelo Criança", price: 35.00, duration: 30, icon: "fa-child", isKid: true }
         ];
 
-        // Helper to format date string YYYY-MM-DD
+        // Função auxiliar para formatar a sequência de datas no formato YYYY-MM-DD
         function getTodayString() {
             const d = new Date();
             const year = d.getFullYear();
@@ -48,7 +48,7 @@ tailwind.config = {
             return `${year}-${month}-${day}`;
         }
 
-        // Initial Mock Appointments
+        // Consultas Simuladas Iniciais
         let appointments = [
             {
                 id: 101,
@@ -81,7 +81,7 @@ tailwind.config = {
             }
         ];
 
-        /* INITIALIZATION */
+        /* INICIALIZAÇÃO */
         window.onload = function() {
             document.getElementById('bookingDate').value = getTodayString();
             renderServices();
@@ -104,7 +104,7 @@ tailwind.config = {
             }
         }
 
-        /* PUBLIC STORE STATUS Indicator */
+        /* Indicador de STATUS DA LOJA */
         function updateStoreStatusBadge() {
             const badge = document.getElementById('badgeStoreStatus');
             const btnAdmin = document.getElementById('btnAdminStoreStatus');
@@ -128,7 +128,7 @@ tailwind.config = {
             showToast("Status Atualizado", `Barbearia alterada para ${isStoreOpen ? 'ABERTO' : 'FECHADO'}`);
         }
 
-        /* SERVICES RENDERING & SELECTION */
+        /* PRESTAÇÃO E SELEÇÃO DE SERVIÇOS */
         function renderServices() {
             const grid = document.getElementById('servicesGrid');
             grid.innerHTML = services.map(s => {
@@ -189,13 +189,13 @@ tailwind.config = {
             }
         }
 
-        /* 30-MIN TIME SLOTS GENERATION */
+        /* GERAÇÃO DE INTERVALOS DE TEMPO DE 30 MINUTOS */
         function renderTimeSlots() {
             const grid = document.getElementById('timeSlotsGrid');
             const selectedDate = document.getElementById('bookingDate').value;
             const service = services.find(s => s.id === selectedServiceId);
             
-            // Available times from 08:00 to 18:30 (30 min increments)
+            // Horários disponíveis das 08:00 às 18:30 (em incrementos de 30 minutos)
             const times = [];
             for(let hour = 8; hour <= 18; hour++) {
                 const hStr = String(hour).padStart(2, '0');
@@ -206,7 +206,7 @@ tailwind.config = {
             }
 
             grid.innerHTML = times.map(t => {
-                // Check if already booked
+                // Verifique se já está reservado.
                 const isBooked = appointments.some(a => a.date === selectedDate && a.time === t && a.status !== 'Cancelado');
                 const isSelected = selectedTimeSlot === t;
 
@@ -235,7 +235,7 @@ tailwind.config = {
             renderTimeSlots();
         }
 
-        /* BOOKING CONFIRMATION & WHATSAPP REDIRECT */
+        /* CONFIRMAÇÃO DE RESERVA E REDIRECIONAMENTO VIA WHATSAPP */
         function confirmBooking() {
             if (!isStoreOpen) {
                 showToast("Barbearia Fechada", "A barbearia está fechada no momento para novos agendamentos.", "error");
@@ -287,7 +287,7 @@ tailwind.config = {
             // Adiciona o novo agendamento no início da lista
             appointments.unshift(newBooking);
 
-            // Build Summary HTML for Modal
+            // Criar HTML de resumo para o modal
             const summaryBox = document.getElementById('bookingSuccessSummary');
             summaryBox.innerHTML = `
                 <div class="flex justify-between border-b border-slate-200 dark:border-slate-700 pb-2">
@@ -323,7 +323,7 @@ tailwind.config = {
                 </div>
             `;
 
-            // Construct WhatsApp Message Confirmation to Barber Shop
+            // Criar mensagem de confirmação do WhatsApp para a barbearia
             let msg = `*Novo Agendamento Confirmado - BarberStudio*\n\n`;
             if (service.isKid) {
                 msg += `Responsável: ${newBooking.responsibleName}\n`;
@@ -341,7 +341,7 @@ tailwind.config = {
             const waUrl = `https://api.whatsapp.com/send?phone=${barberShopWhatsApp}&text=${encodeURIComponent(msg)}`;
             document.getElementById('btnSendWhatsApp').href = waUrl;
 
-            // Open Interactive Confirmation Modal
+            // Abrir Modal de Confirmação Interativa
             document.getElementById('modalBookingSuccess').classList.remove('hidden');
 
             renderTimeSlots();
@@ -361,7 +361,7 @@ tailwind.config = {
             renderTimeSlots();
         }
 
-        /* ADMIN AUTH & NAVIGATION */
+        /* AUTENTICAÇÃO / SENHA E NAVEGAÇÃO DO ADMINISTRADOR */
         function openAdminAuthModal() {
             if (isAdminAuthenticated) {
                 showAdminPanel();
@@ -376,7 +376,7 @@ tailwind.config = {
 
         function authenticateAdmin() {
             const pwd = document.getElementById('inputAdminPassword').value;
-            if (pwd === "123456") {
+            if (pwd === "123") {
                 isAdminAuthenticated = true;
                 closeAdminAuthModal();
                 showAdminPanel();
@@ -416,7 +416,7 @@ tailwind.config = {
             });
         }
 
-        /* ADMIN APPOINTMENTS MANAGEMENT & AUTOMATION */
+        /* GESTÃO E AUTOMAÇÃO DE AGENDAMENTOS ADMINISTRATIVOS */
         function renderAdminAppointments() {
             const table = document.getElementById('adminAppointmentsTable');
             const filter = document.getElementById('adminStatusFilter').value;
@@ -481,7 +481,7 @@ tailwind.config = {
                 app.completedDate = getTodayString();
                 showToast("Status Atualizado", `Agendamento de ${app.clientName} concluído com sucesso! Faturamento atualizado.`);
             } else if (newStatus === 'Em Atraso') {
-                // WhatsApp Delay Automation Message
+                // Mensagem de Automação de Atraso do WhatsApp
                 const delayMsg = `Olá ${app.clientName}, notamos um pequeno atraso em seu agendamento das ${app.time}. Poderia nos confirmar seu horário?`;
                 const cleanPhone = app.clientPhone.replace(/\D/g, '');
                 const waUrl = `https://api.whatsapp.com/send?phone=55${cleanPhone}&text=${encodeURIComponent(delayMsg)}`;
@@ -493,7 +493,7 @@ tailwind.config = {
             renderReport();
         }
 
-        /* CLIENT MY APPOINTMENTS MODAL FUNCTIONS */
+        /* CLIENTE / MEUS AGENDAMENTOS / FUNÇÕES */
         function openMyAppointmentsModal() {
             document.getElementById('modalMyAppointments').classList.remove('hidden');
             if (activeClientPhone) {
@@ -590,7 +590,7 @@ tailwind.config = {
             }).join('');
         }
 
-        /* CANCEL BOOKING MODAL LOGIC */
+        /* LÓGICA DE CANCELAMENTO DE RESERVA */
         function openCancelBookingModal(id) {
             document.getElementById('cancelAppointmentId').value = id;
             document.getElementById('inputCancelReason').value = '';
@@ -625,16 +625,16 @@ tailwind.config = {
             }
         }
 
-        /* REPORTING & FINANCIAL METRICS */
+        /* RELATÓRIOS E MÉTRICAS FINANCEIRAS */
         function renderReport() {
             const todayStr = getTodayString();
             
-            // Calculate today's revenue from completed appointments
+            // Calcule a receita de hoje proveniente dos agendamentos concluídos.
             const todayRevenue = appointments
                 .filter(a => a.status === 'Concluído' && a.completedDate === todayStr)
                 .reduce((acc, a) => acc + a.price, 0);
 
-            // Total revenue for demo metrics
+            // Receita total para métricas de demonstração
             const totalRevenue = appointments
                 .filter(a => a.status === 'Concluído')
                 .reduce((acc, a) => acc + a.price, 0);
@@ -644,7 +644,7 @@ tailwind.config = {
             document.getElementById('metricRevenueMonth').innerText = `R$ ${totalRevenue.toFixed(2).replace('.', ',')}`;
             document.getElementById('metricRevenueYear').innerText = `R$ ${(totalRevenue * 3.5).toFixed(2).replace('.', ',')}`;
 
-            // Service Breakdown
+            // Avaria no serviço
             const distList = document.getElementById('serviceDistributionList');
             const completedApps = appointments.filter(a => a.status === 'Concluído');
 
@@ -671,7 +671,7 @@ tailwind.config = {
             }).join('');
         }
 
-        /* ADMIN SERVICES MANAGEMENT */
+        /* GESTÃO DE SERVIÇOS ADMINISTRATIVOS */
         function renderAdminServices() {
             const list = document.getElementById('adminServicesList');
             list.innerHTML = services.map(s => `
