@@ -4,36 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BarberStudio - Agendamento & Gestão</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
-
-    <!-- Tailwind CSS CDN -->
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            50: '#fffbeb',
-                            100: '#fef3c7',
-                            500: '#f59e0b',
-                            600: '#d97706',
-                            700: '#b45309',
-                            dark: '#0f172a',
-                            card: '#1e293b'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <script src="script.js"></script>
+    
     
     <!-- FontAwesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     
-    <!-- Estilo Customizado Separado -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-slate-50 text-slate-800 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col">
@@ -44,9 +25,7 @@
             
             <!-- Logo & Store Status -->
             <div class="flex items-center gap-4">
-                <div class="w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg shadow-amber-500/20 overflow-hidden">
-                    <!-- Suporte a imagem da pasta images/ caso exista logo.png -->
-                    <img src="images/logo.png" alt="Logo" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden')">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500 flex items-center justify-center text-slate-950 font-black text-2xl shadow-lg shadow-amber-500/20">
                     <i class="fa-solid fa-scissors"></i>
                 </div>
                 <div>
@@ -61,8 +40,9 @@
                 </div>
             </div>
 
-            <!-- Controls -->
+            <!-- Controls: Dark Mode & Admin Restricted Link -->
             <div class="flex items-center gap-3">
+                <!-- Botão Meus Agendamentos (Cliente) -->
                 <button onclick="openMyAppointmentsModal()" class="text-xs font-bold px-3.5 py-2 rounded-xl text-amber-600 dark:text-amber-400 bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/20 transition flex items-center gap-2">
                     <i class="fa-solid fa-calendar-user text-sm"></i>
                     <span>Meus Agendamentos</span>
@@ -72,6 +52,7 @@
                     <i id="themeIcon" class="fa-solid fa-moon text-lg"></i>
                 </button>
 
+                <!-- Discretely styled button for Admin Area -->
                 <button onclick="openAdminAuthModal()" class="text-xs font-semibold px-3 py-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-100/60 dark:bg-slate-800/60 hover:bg-slate-200 dark:hover:bg-slate-800 transition flex items-center gap-1.5">
                     <i class="fa-solid fa-lock text-[10px]"></i>
                     <span>Restrito</span>
@@ -83,7 +64,7 @@
     <!-- PUBLIC BOOKING SECTION -->
     <main id="publicView" class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
         
-        <!-- Banner -->
+        <!-- Banner / Welcome -->
         <div class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 p-6 sm:p-8 rounded-3xl shadow-xl shadow-amber-500/10 flex flex-col sm:flex-row items-center justify-between gap-6">
             <div class="space-y-2 text-center sm:text-left">
                 <span class="px-3 py-1 bg-slate-950/10 rounded-full text-xs font-extrabold uppercase tracking-wider">Corte seu cabelo sem filas</span>
@@ -106,11 +87,11 @@
                 </div>
 
                 <div id="servicesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <!-- Dynamic rendering -->
+                    <!-- Services loaded dynamically -->
                 </div>
             </div>
 
-            <!-- STEP 2: Client Details -->
+            <!-- STEP 2: Client Details (Dynamic Form Fields) -->
             <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <div class="flex items-center gap-3">
                     <span class="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 font-bold flex items-center justify-center text-sm">2</span>
@@ -118,16 +99,19 @@
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Field 1: Name / Responsible Name -->
                     <div>
                         <label id="lblClientName" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Nome Completo</label>
                         <input type="text" id="inputClientName" placeholder="Digite seu nome..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 dark:focus:border-amber-500">
                     </div>
 
+                    <!-- Field 2: Phone / Responsible Phone -->
                     <div>
                         <label id="lblClientPhone" class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Telefone (WhatsApp)</label>
                         <input type="tel" id="inputClientPhone" placeholder="(75) 99999-8888" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500 dark:focus:border-amber-500">
                     </div>
 
+                    <!-- Extra Dynamic Fields for Kid's Haircut -->
                     <div id="kidFieldsContainer" class="col-span-full grid grid-cols-1 sm:grid-cols-2 gap-4 hidden bg-amber-500/5 border border-amber-500/20 p-4 rounded-2xl">
                         <div>
                             <label class="block text-xs font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mb-2"><i class="fa-solid fa-child mr-1"></i>Nome da Criança</label>
@@ -141,7 +125,7 @@
                 </div>
             </div>
 
-            <!-- STEP 3: Date & Slots -->
+            <!-- STEP 3: Date & 30-min Time Slots -->
             <div class="space-y-4 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
@@ -157,7 +141,7 @@
                 </div>
             </div>
 
-            <!-- Booking Summary -->
+            <!-- Booking Summary & Action -->
             <div class="pt-6 border-t border-slate-100 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                     <div class="text-xs text-slate-500 dark:text-slate-400">Valor Total Estimado:</div>
@@ -174,18 +158,23 @@
 
     <!-- ADMIN PANEL SECTION -->
     <div id="adminView" class="hidden flex-1 flex flex-col md:flex-row max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 gap-6">
+        
+        <!-- Left Sidebar Navigation -->
         <aside class="w-full md:w-64 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 flex flex-col justify-between shrink-0 shadow-sm">
             <div class="space-y-6">
+                <!-- Admin Header & Logout -->
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
                     <div>
                         <span class="text-[10px] font-bold text-amber-500 uppercase tracking-wider">Painel Gestor</span>
                         <h3 class="font-bold text-slate-900 dark:text-white text-base">Administração</h3>
                     </div>
+                    <!-- Logout Button -->
                     <button onclick="logoutAdmin()" class="p-2 rounded-xl text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-500/10 transition" title="Sair da Conta">
                         <i class="fa-solid fa-right-from-bracket text-lg"></i>
                     </button>
                 </div>
 
+                <!-- Store Status Toggle -->
                 <div class="bg-slate-50 dark:bg-slate-800/60 p-3.5 rounded-2xl border border-slate-200 dark:border-slate-700/60 space-y-2">
                     <div class="text-xs font-semibold text-slate-500 dark:text-slate-400">Status do Estabelecimento</div>
                     <button onclick="toggleStoreStatus()" id="btnAdminStoreStatus" class="w-full py-2 px-3 rounded-xl font-bold text-xs flex items-center justify-center gap-2 transition bg-emerald-500 text-slate-950">
@@ -194,6 +183,7 @@
                     </button>
                 </div>
 
+                <!-- Navigation Tabs -->
                 <nav class="space-y-1.5">
                     <button onclick="switchAdminTab('agendamentos')" id="adminNavAgendamentos" class="w-full px-4 py-3 rounded-2xl font-semibold text-xs flex items-center gap-3 transition bg-amber-500 text-slate-950 shadow-md">
                         <i class="fa-regular fa-calendar-check text-base"></i>
@@ -209,23 +199,31 @@
                     </button>
                 </nav>
             </div>
+
+            <div class="pt-4 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-400 text-center">
+                Sessão Ativa • Barbearia Admin
+            </div>
         </aside>
 
+        <!-- Main Content Area for Admin Tabs -->
         <main class="flex-1 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-6 sm:p-8 shadow-sm">
+            
             <!-- TAB 1: AGENDAMENTOS -->
             <section id="adminTabAgendamentos" class="space-y-6">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
                     <div>
                         <h2 class="text-xl font-bold text-slate-900 dark:text-white">Gerenciamento de Agendamentos</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400">Novos agendamentos aparecem sempre no topo.</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Acompanhe, conclua e notifique seus clientes em tempo real.</p>
                     </div>
-                    <select id="adminStatusFilter" onchange="renderAdminAppointments()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 focus:outline-none">
-                        <option value="todos">Todos os Status</option>
-                        <option value="Pendente">Pendente</option>
-                        <option value="Concluído">Concluído</option>
-                        <option value="Em Atraso">Em Atraso</option>
-                        <option value="Cancelado">Cancelado</option>
-                    </select>
+                    <div class="flex items-center gap-2">
+                        <select id="adminStatusFilter" onchange="renderAdminAppointments()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs rounded-xl px-3 py-2 text-slate-700 dark:text-slate-200 focus:outline-none">
+                            <option value="todos">Todos os Status</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Concluído">Concluído</option>
+                            <option value="Em Atraso">Em Atraso</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="overflow-x-auto">
@@ -240,145 +238,235 @@
                                 <th class="py-3 px-4 text-right">Ações</th>
                             </tr>
                         </thead>
-                        <tbody id="adminAppointmentsTable" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs"></tbody>
+                        <tbody id="adminAppointmentsTable" class="divide-y divide-slate-100 dark:divide-slate-800 text-xs">
+                            <!-- Injected via JavaScript -->
+                        </tbody>
                     </table>
                 </div>
             </section>
 
-            <!-- TAB 2: FINANCEIRO -->
+            <!-- TAB 2: RELATÓRIO FINANCEIRO -->
             <section id="adminTabFinanceiro" class="hidden space-y-6">
                 <div>
                     <h2 class="text-xl font-bold text-slate-900 dark:text-white">Relatório de Vendas e Faturamento</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Métricas atualizadas automaticamente ao marcar agendamentos como concluídos.</p>
                 </div>
+
+                <!-- Financial Metric Cards -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
-                        <span class="text-xs font-bold text-slate-400 uppercase">Hoje</span>
+                        <span class="text-xs font-bold text-slate-400 uppercase">Faturamento Hoje</span>
                         <div id="metricRevenueToday" class="text-2xl font-black text-emerald-600 dark:text-emerald-400 mt-1">R$ 0,00</div>
+                        <span class="text-[10px] text-slate-500">Concluídos na data de hoje</span>
                     </div>
+
                     <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
                         <span class="text-xs font-bold text-slate-400 uppercase">Esta Semana</span>
                         <div id="metricRevenueWeek" class="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">R$ 0,00</div>
+                        <span class="text-[10px] text-slate-500">Últimos 7 dias</span>
                     </div>
+
                     <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
                         <span class="text-xs font-bold text-slate-400 uppercase">Este Mês</span>
                         <div id="metricRevenueMonth" class="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">R$ 0,00</div>
+                        <span class="text-[10px] text-slate-500">Mês vigente</span>
                     </div>
+
                     <div class="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-200 dark:border-slate-700/60">
                         <span class="text-xs font-bold text-slate-400 uppercase">Este Ano</span>
                         <div id="metricRevenueYear" class="text-2xl font-black text-amber-600 dark:text-amber-400 mt-1">R$ 0,00</div>
+                        <span class="text-[10px] text-slate-500">Acumulado anual</span>
                     </div>
                 </div>
+
+                <!-- Distribution Chart/Breakdown -->
                 <div class="bg-slate-50 dark:bg-slate-800/30 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 space-y-4">
                     <h3 class="font-bold text-sm text-slate-900 dark:text-white">Distribuição por Serviço Concluído</h3>
-                    <div id="serviceDistributionList" class="space-y-3"></div>
+                    <div id="serviceDistributionList" class="space-y-3">
+                        <!-- Progress bars rendered JS -->
+                    </div>
                 </div>
             </section>
 
-            <!-- TAB 3: SERVIÇOS -->
+            <!-- TAB 3: GESTÃO DE SERVIÇOS -->
             <section id="adminTabServicos" class="hidden space-y-6">
                 <div class="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
                     <div>
                         <h2 class="text-xl font-bold text-slate-900 dark:text-white">Catálogo de Serviços</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Cadastre, altere preços e tempos de duração dos cortes.</p>
                     </div>
                     <button onclick="openNewServiceModal()" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-4 py-2.5 rounded-xl text-xs transition flex items-center gap-2">
                         <i class="fa-solid fa-plus"></i>
                         <span>Novo Serviço</span>
                     </button>
                 </div>
-                <div id="adminServicesList" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+                <div id="adminServicesList" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Services Admin Cards -->
+                </div>
             </section>
         </main>
     </div>
 
-    <!-- MODAIS -->
-    <!-- Modal Admin Auth -->
+    <!-- MODAL 1: ADMIN AUTHENTICATION -->
     <div id="modalAdminAuth" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-5">
             <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
                 <h3 class="font-bold text-lg text-slate-900 dark:text-white">Acesso Restrito</h3>
-                <p class="text-xs text-slate-500">Digite a senha (123456)</p>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Digite a senha de administrador para acessar o painel gestor.</p>
             </div>
-            <input type="password" id="inputAdminPassword" placeholder="Senha" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-center font-bold">
-            <p id="adminAuthError" class="text-xs text-rose-500 text-center hidden">Senha incorreta!</p>
+
+            <div>
+                <input type="password" id="inputAdminPassword" placeholder="Senha de Acesso (Teste: 123456)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-center font-bold tracking-widest focus:outline-none focus:border-amber-500">
+                <p id="adminAuthError" class="text-xs text-rose-500 mt-1.5 text-center hidden">Senha incorreta. Tente 123456.</p>
+            </div>
+
             <div class="flex gap-3">
-                <button onclick="closeAdminAuthModal()" class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 py-2.5 rounded-xl text-xs">Cancelar</button>
-                <button onclick="authenticateAdmin()" class="flex-1 bg-amber-500 text-slate-950 font-bold py-2.5 rounded-xl text-xs">Entrar</button>
+                <button onclick="closeAdminAuthModal()" class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold py-2.5 rounded-xl text-xs">Cancelar</button>
+                <button onclick="authenticateAdmin()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs">Entrar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Novo/Editar Serviço -->
+    <!-- MODAL 2: NEW SERVICE ADDITION -->
     <div id="modalNewService" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
-            <h3 id="modalServiceTitle" class="font-bold text-lg text-slate-900 dark:text-white">Cadastrar Serviço</h3>
+            <h3 id="modalServiceTitle" class="font-bold text-lg text-slate-900 dark:text-white">Cadastrar Novo Serviço</h3>
             <input type="hidden" id="editServiceId" value="">
+            
             <div class="space-y-3">
-                <input type="text" id="newServiceName" placeholder="Nome do Serviço" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-2 text-sm">
-                <input type="number" id="newServicePrice" placeholder="Preço (R$)" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-2 text-sm">
-                <select id="newServiceDuration" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl px-3 py-2 text-sm">
-                    <option value="15">15 min</option>
-                    <option value="30" selected>30 min</option>
-                    <option value="45">45 min</option>
-                    <option value="60">60 min</option>
-                </select>
-            </div>
-            <div class="flex gap-3 pt-2">
-                <button onclick="closeNewServiceModal()" class="flex-1 bg-slate-100 dark:bg-slate-800 py-2.5 rounded-xl text-xs">Cancelar</button>
-                <button onclick="saveNewService()" class="flex-1 bg-amber-500 text-slate-950 font-bold py-2.5 rounded-xl text-xs">Salvar</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal Sucesso & WhatsApp -->
-    <div id="modalBookingSuccess" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 border rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5">
-            <div class="text-center space-y-2">
-                <h3 class="font-bold text-xl text-slate-900 dark:text-white">Agendamento Realizado!</h3>
-            </div>
-            <div id="bookingSuccessSummary" class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl text-xs space-y-2"></div>
-            <a id="btnSendWhatsApp" href="#" target="_blank" onclick="closeBookingSuccessModal()" class="w-full bg-emerald-500 text-slate-950 font-bold py-3.5 px-4 rounded-2xl flex items-center justify-center gap-2 text-sm">
-                <i class="fa-brands fa-whatsapp text-xl"></i>
-                <span>Enviar no WhatsApp da Barbearia</span>
-            </a>
-            <button onclick="closeBookingSuccessModal()" class="w-full bg-slate-100 dark:bg-slate-800 py-3 rounded-2xl text-xs">Fechar</button>
-        </div>
-    </div>
-
-    <!-- Modal Meus Agendamentos -->
-    <div id="modalMyAppointments" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 border rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] flex flex-col">
-            <div class="flex items-center justify-between pb-3 border-b shrink-0">
-                <h3 class="font-bold text-lg text-slate-900 dark:text-white">Meus Agendamentos</h3>
-                <button onclick="closeMyAppointmentsModal()" class="text-slate-400">✕</button>
-            </div>
-            <div id="clientPhoneLoginForm" class="space-y-4 py-2">
-                <input type="tel" id="inputClientSearchPhone" placeholder="(75) 99999-8888" class="w-full bg-slate-50 dark:bg-slate-800 border rounded-2xl px-4 py-3 text-sm">
-                <button onclick="searchClientAppointments()" class="w-full bg-amber-500 text-slate-950 font-bold py-3.5 rounded-2xl text-xs">Buscar Horários</button>
-            </div>
-            <div id="clientAppointmentsContainer" class="hidden flex-1 flex flex-col space-y-4 overflow-hidden">
-                <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl shrink-0">
-                    <span class="text-xs text-slate-400">Telefone: <strong id="loggedPhoneDisplay" class="text-amber-500"></strong></span>
-                    <button onclick="logoutClientSession()" class="text-[11px] text-rose-500 font-bold">Sair</button>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Nome do Serviço</label>
+                    <input type="text" id="newServiceName" placeholder="Ex: Barba Terapia" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm">
                 </div>
-                <div id="clientAppointmentsList" class="overflow-y-auto custom-scrollbar flex-1 space-y-3 pr-1"></div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Preço (R$)</label>
+                    <input type="number" id="newServicePrice" placeholder="35.00" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-500 mb-1">Duração em Minutos</label>
+                    <select id="newServiceDuration" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-sm">
+                        <option value="15">15 minutos</option>
+                        <option value="30" selected>30 minutos</option>
+                        <option value="45">45 minutos</option>
+                        <option value="60">60 minutos</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button onclick="closeNewServiceModal()" class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold py-2.5 rounded-xl text-xs">Cancelar</button>
+                <button onclick="saveNewService()" class="flex-1 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-2.5 rounded-xl text-xs">Cadastrar</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Cancelamento -->
+    <!-- MODAL 3: INTERACTIVE BOOKING SUCCESS & WHATSAPP BUTTON -->
+    <div id="modalBookingSuccess" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-5">
+            <div class="text-center space-y-2">
+                <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 text-emerald-500 flex items-center justify-center mx-auto text-2xl border border-emerald-500/20">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="font-bold text-xl text-slate-900 dark:text-white">Agendamento Realizado!</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Seu horário foi reservado com sucesso em nosso sistema.</p>
+            </div>
+
+            <!-- Summary Box -->
+            <div id="bookingSuccessSummary" class="bg-slate-50 dark:bg-slate-800/60 p-4 rounded-2xl border border-slate-200 dark:border-slate-700/60 space-y-2 text-xs">
+                <!-- Injected via JavaScript -->
+            </div>
+
+            <!-- Modal Action Buttons -->
+            <div class="space-y-2 pt-1">
+                <a id="btnSendWhatsApp" href="#" target="_blank" onclick="closeBookingSuccessModal()" class="w-full bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-3.5 px-4 rounded-2xl transition flex items-center justify-center gap-2 text-sm shadow-lg shadow-emerald-500/20">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    <span>Enviar Confirmação no WhatsApp da Barbearia</span>
+                </a>
+                <button onclick="closeBookingSuccessModal()" class="w-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold py-3 rounded-2xl text-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+                    Concluir e Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: CLIENT MY APPOINTMENTS LOGIN & LIST -->
+    <div id="modalMyAppointments" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-lg w-full p-6 shadow-2xl space-y-5 max-h-[90vh] flex flex-col">
+            <!-- Header -->
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-500 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-calendar-user"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-lg text-slate-900 dark:text-white">Meus Agendamentos</h3>
+                        <p class="text-xs text-slate-400">Consulte e gerencie seus horários</p>
+                    </div>
+                </div>
+                <button onclick="closeMyAppointmentsModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Step 1: Phone Login Form -->
+            <div id="clientPhoneLoginForm" class="space-y-4 py-2">
+                <div class="text-xs text-slate-500 dark:text-slate-400">
+                    Digite o número de telefone (WhatsApp) cadastrado no momento do agendamento para acessar seu histórico.
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">Telefone Cadastrado</label>
+                    <input type="tel" id="inputClientSearchPhone" placeholder="(75) 99999-8888" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl px-4 py-3 text-sm focus:outline-none focus:border-amber-500">
+                </div>
+                <button onclick="searchClientAppointments()" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold py-3.5 rounded-2xl text-xs shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <span>Buscar Meus Horários</span>
+                </button>
+            </div>
+
+            <!-- Step 2: Client Appointments List -->
+            <div id="clientAppointmentsContainer" class="hidden flex-1 flex flex-col space-y-4 overflow-hidden">
+                <div class="flex items-center justify-between bg-slate-50 dark:bg-slate-800/60 p-3 rounded-2xl border border-slate-200 dark:border-slate-700/60 shrink-0">
+                    <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Acessado como: <strong id="loggedPhoneDisplay" class="text-amber-500"></strong></span>
+                    <button onclick="logoutClientSession()" class="text-[11px] text-rose-500 hover:underline font-bold">Trocar Número</button>
+                </div>
+
+                <div id="clientAppointmentsList" class="overflow-y-auto custom-scrollbar flex-1 space-y-3 pr-1">
+                    <!-- Dynamic client appointments -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 5: CANCEL APPOINTMENT REASON -->
     <div id="modalCancelBooking" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-        <div class="bg-white dark:bg-slate-900 border rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
-            <h3 class="font-bold text-lg text-slate-900 dark:text-white text-center">Cancelar Agendamento</h3>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+            <div class="text-center space-y-2">
+                <div class="w-12 h-12 rounded-2xl bg-rose-500/10 text-rose-500 flex items-center justify-center mx-auto text-xl">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                </div>
+                <h3 class="font-bold text-lg text-slate-900 dark:text-white">Cancelar Agendamento</h3>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Por favor, informe o motivo do cancelamento para a barbearia.</p>
+            </div>
+
             <input type="hidden" id="cancelAppointmentId">
-            <textarea id="inputCancelReason" rows="3" placeholder="Informe o motivo..." class="w-full bg-slate-50 dark:bg-slate-800 border rounded-xl p-3 text-xs"></textarea>
-            <div class="flex gap-2.5">
-                <button onclick="closeCancelBookingModal()" class="flex-1 bg-slate-100 dark:bg-slate-800 py-2.5 rounded-xl text-xs">Voltar</button>
-                <button onclick="confirmCancelBooking()" class="flex-1 bg-rose-500 text-white font-bold py-2.5 rounded-xl text-xs">Confirmar Cancelamento</button>
+
+            <div>
+                <label class="block text-xs font-bold text-slate-500 dark:text-slate-400 mb-1.5 uppercase tracking-wider">Motivo / Observação</label>
+                <textarea id="inputCancelReason" rows="3" placeholder="Ex: Surgiu um imprevisto / Mudança de compromisso..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-3 text-xs focus:outline-none focus:border-rose-500 text-slate-900 dark:text-white"></textarea>
+            </div>
+
+            <div class="flex gap-2.5 pt-1">
+                <button onclick="closeCancelBookingModal()" class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold py-2.5 rounded-xl text-xs">Voltar</button>
+                <button onclick="confirmCancelBooking()" class="flex-1 bg-rose-500 hover:bg-rose-600 text-white font-bold py-2.5 rounded-xl text-xs shadow-lg shadow-rose-500/20">Confirmar Cancelamento</button>
             </div>
         </div>
     </div>
 
-    <!-- Toast Notification -->
+    <!-- TOAST NOTIFICATION CONTAINER -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 bg-slate-900 text-white border border-slate-700 px-5 py-4 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
         <div id="toastIcon" class="text-xl"></div>
         <div>
@@ -386,7 +474,5 @@
             <div id="toastMessage" class="text-xs text-slate-400"></div>
         </div>
     </div>
-
-
 </body>
 </html>
